@@ -1,0 +1,3 @@
+// 1.21	2024-08-09T12:10:24.2892011	Tags for minecraft:block mod id index
+dbc77cd0218309140c83d59db01bf4a7b836cc51 data/minecraft/tags/block/mineable/pickaxe.json
+dbc77cd0218309140c83d59db01bf4a7b836cc51 data/minecraft/tags/block/needs_diamond_tool.json
