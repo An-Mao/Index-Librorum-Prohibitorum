@@ -20,7 +20,7 @@ public class IndexData {
     public static final String LVL = "lvl";
     public static final String XP = "xp";
     private Level level;
-    private final HashMap<Enchantment, IndexEnchantData> enchantData;
+    private final HashMap<Holder<Enchantment>, IndexEnchantData> enchantData;
     public IndexData() {
         enchantData = new HashMap<>();
     }
@@ -54,7 +54,7 @@ public class IndexData {
             EnchantmentSupports.getRegistry().getHolder(ResourceLocation.parse(eid)).ifPresent((holder) -> {
                 int lvl = Mth.clamp(compoundtag.getInt(MAX_LVL), 0, Integer.MAX_VALUE);
                 IndexEnchantData stringIntInt = new IndexEnchantData(holder,lvl,compoundtag.getString(XP));
-                enchantData.put(holder.get(), stringIntInt);
+                enchantData.put(holder, stringIntInt);
             });
         }
 
@@ -73,7 +73,7 @@ public class IndexData {
         }
         lEnchantData.addXp(lvlToXp(pLvl));
         lEnchantData.setMaxLvl(pLvl);
-        enchantData.put(lEnchant,lEnchantData);
+        enchantData.put(holder,lEnchantData);
     }
 
 
@@ -88,7 +88,7 @@ public class IndexData {
         BigInteger base = new BigInteger("2");
         return base.pow(lvl - 1);
     }
-    public HashMap<Enchantment, IndexEnchantData> getEnchantData() {
+    public HashMap<Holder<Enchantment>, IndexEnchantData> getEnchantData() {
         return enchantData;
     }
 

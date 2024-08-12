@@ -201,7 +201,7 @@ public class SimpleListBox extends SimpleWidgetCore<SimpleListBox> {
                             backgroundColor = getElementalBackgroundHoverColor();
                             txtColor = getElementalTextHoverColor();
                             idex = elemIndex;
-                            guiGraphics.renderTooltip(font, getData(elemIndex).getTooltip(), Optional.empty(), mouseX, mouseY);
+                            guiGraphics.renderComponentTooltip(font, getData(elemIndex).getTooltip(),  mouseX, mouseY);
                         }
                         PoseStack poseStack = guiGraphics.pose();
                         poseStack.pushPose();

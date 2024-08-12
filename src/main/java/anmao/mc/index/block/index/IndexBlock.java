@@ -5,6 +5,10 @@ import anmao.mc.index.register.BlockEntityRegister;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -14,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -94,8 +99,18 @@ public class IndexBlock extends EntityBlockCore {
 
     @Override
     public void appendHoverText(ItemStack pStack, Item.TooltipContext pContext, List<Component> pTooltipComponents, TooltipFlag pTooltipFlag) {
-        pTooltipComponents.add(Component.translatable("tooltip.nu.index.item.desc").withStyle(ChatFormatting.DARK_BLUE));
-        pTooltipComponents.add(Component.translatable("tooltip.nu.index.item.desc1").withStyle(ChatFormatting.GOLD));
+        CustomData dat = pStack.get(DataComponents.BLOCK_ENTITY_DATA);
+        if (dat != null) {
+            CompoundTag nbt = dat.copyTag();
+            int i = nbt.getList("index.enchants", Tag.TAG_COMPOUND).size();
+
+            pTooltipComponents.add(Component.translatable("tooltip.index.index.save.all").withStyle(ChatFormatting.RED).append(Component.literal(String.valueOf(i)).withStyle(ChatFormatting.RED)));
+            i = nbt.getInt("index.mp");
+            pTooltipComponents.add(Component.translatable("tooltip.index.index.mp").withStyle(ChatFormatting.DARK_AQUA).append(Component.literal(String.valueOf(i)).withStyle(ChatFormatting.DARK_AQUA)));
+            //id:"index:index",index.enchants:[{id:"minecraft:density",max:5,xp:"16"},{id:"minecraft:thorns",max:3,xp:"4"},{id:"minecraft:power",max:5,xp:"16"}],index.inventory.in:{Items:[]},index.inventory.out:{Items:[{Slot:0b,count:2,id:"minecraft:book"}]},index.mp:0,index.progress:0
+        }
+        pTooltipComponents.add(Component.translatable("tooltip.index.index.item.desc").withStyle(ChatFormatting.DARK_BLUE));
+        pTooltipComponents.add(Component.translatable("tooltip.index.index.item.desc1").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(pStack, pContext, pTooltipComponents, pTooltipFlag);
     }
 }

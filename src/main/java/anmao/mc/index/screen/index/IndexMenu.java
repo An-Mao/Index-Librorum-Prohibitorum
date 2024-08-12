@@ -7,6 +7,7 @@ import anmao.mc.index.register.BlockRegister;
 import anmao.mc.index.register.MenuTypeRegister;
 import anmao.mc.index.screen.AbstractContainerMenuCore;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -43,7 +44,7 @@ public class IndexMenu extends AbstractContainerMenuCore {
         addPlayerInventory(inv,143,140,18);
         addPlayerHotBar(inv,143,198,18);
         this.index.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler,0,82,140){
+            this.addSlot(new SlotItemHandler(iItemHandler,0,36,141){
 
                 @Override
                 public int getMaxStackSize(@NotNull ItemStack itemStack) {
@@ -55,7 +56,7 @@ public class IndexMenu extends AbstractContainerMenuCore {
             });
         });
         this.index.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler,0,82,193){
+            this.addSlot(new SlotItemHandler(iItemHandler,0,94,141){
                 @Override
                 public boolean mayPlace(@NotNull ItemStack stack) {
                     return false;
@@ -100,7 +101,7 @@ public class IndexMenu extends AbstractContainerMenuCore {
         return stillValid(ContainerLevelAccess.create(level,index.getBlockPos()),player, BlockRegister.INDEX.get());
     }
 
-    public HashMap<Enchantment, IndexEnchantData> getEnchantData() {
+    public HashMap<Holder<Enchantment>, IndexEnchantData> getEnchantData() {
         return this.index.getSaveEnchants();
     }
     public ItemStack getInputItem(){

@@ -20,8 +20,8 @@ public class ItemRegister {
 
     public static class CreativeTabs {
         private static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Index.MOD_ID);
-        public static final RegistryObject<CreativeModeTab> TAB = TABS.register("nu_tab",()-> CreativeModeTab.builder().icon(()->new ItemStack(BlockRegister.INDEX.get()))
-                .title(Component.translatable("create_tab.nu_tab"))
+        public static final RegistryObject<CreativeModeTab> TAB = TABS.register("index_tab",()-> CreativeModeTab.builder().icon(()->new ItemStack(BlockRegister.INDEX.get()))
+                .title(Component.translatable("create_tab.index_tab"))
                 .displayItems((pParameters, pOutput) -> {
                     pOutput.accept(BlockRegister.INDEX.get());
                 })

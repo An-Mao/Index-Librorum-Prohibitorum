@@ -2,6 +2,7 @@ package anmao.mc.index.block;
 
 import anmao.mc.index.block.index.IndexBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -30,12 +31,17 @@ public abstract class EntityBlockCore extends BaseEntityBlock {
         if (!pLevel.isClientSide){
             if (pPlayer.hasCorrectToolForDrops(pState) && pLevel.getBlockEntity(pPos) instanceof IndexBlockEntity indexBlockEntity) {
                 dropItem = new ItemStack(pState.getBlock(),1);
-                dropItem.applyComponents(indexBlockEntity.collectComponents());
+                //dropItem.applyComponents(indexBlockEntity.collectComponents());
+                indexBlockEntity.saveToItem(dropItem,pLevel.registryAccess());
+                //dropItem.saveToItem(pLevel.registryAccess());
+                /*
                 ItemEntity itementity = new ItemEntity(
                         pLevel, (double)pPos.getX() + 0.5, (double)pPos.getY() + 0.5, (double)pPos.getZ() + 0.5, dropItem
                 );
                 itementity.setDefaultPickUpDelay();
                 pLevel.addFreshEntity(itementity);
+
+                 */
             }
         }
         super.playerWillDestroy(pLevel, pPos, pState, pPlayer);

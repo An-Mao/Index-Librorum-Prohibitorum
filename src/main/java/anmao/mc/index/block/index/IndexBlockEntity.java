@@ -230,7 +230,7 @@ public class IndexBlockEntity extends MenuBlockEntityCore {
         if (getOutputItem() != ItemStack.EMPTY) return in.is(Items.ENCHANTED_BOOK) && getOutputItem().is(Items.BOOK);
         return !in.getEnchantments().isEmpty() || in.getItem() == Items.ENCHANTED_BOOK;
     }
-    public HashMap<Enchantment, IndexEnchantData> getSaveEnchants(){
+    public HashMap<Holder<Enchantment>, IndexEnchantData> getSaveEnchants(){
         return enchantData.getEnchantData();
     }
     public void handlePacket(CompoundTag msg) {
@@ -248,10 +248,10 @@ public class IndexBlockEntity extends MenuBlockEntityCore {
             int needMp = 0;
             for (int i = 0; i < datas.size(); i++) {
                 CompoundTag c = datas.getCompound(i);
-                Optional<Holder.Reference<Enchantment>> enchantment = reg.getHolder(ResourceLocation.parse(c.getString(IndexData.ID)));
-
+                String id = c.getString(IndexData.ID);
+                Optional<Holder.Reference<Enchantment>> enchantment = reg.getHolder(ResourceLocation.parse(id));
                 if (enchantment.isPresent()) {
-                    if (enchantment.get().get().canEnchant(newItem)){
+                    if (enchantment.get().get().canEnchant(newItem) || newItem.getItem() == Items.ENCHANTED_BOOK) {
                         int lvl = Math.min(c.getInt(IndexData.LVL), enchantment.get().get().getMaxLevel());
                         if (Config.instance.getDatas().indexMpUse > 0) {
                             needMp += lvl * Config.instance.getDatas().indexMpUse;
